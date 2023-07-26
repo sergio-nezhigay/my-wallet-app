@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { getAccountBalance } from "./getAccountBalance";
+import { getAccountBalance } from "../utils/getAccountBalance";
+import { FormContainer } from "../styles/MoneyTransferForm.styled";
 
 const validationSchema = (balance, web3) =>
   Yup.object().shape({
@@ -66,33 +67,39 @@ const MoneyTransferForm = ({ web3, accounts, setBalance, balance }) => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema(balance, web3)}
-      onSubmit={handleSubmit}
-    >
-      {({ isValid, dirty, isSubmitting }) => (
-        <Form>
-          <h2>Token Transfer Form</h2>
-          <div>
-            <label htmlFor="recipient">Recipient Address:</label>
-            <Field type="text" name="recipient" id="recipient" />
-            <ErrorMessage name="recipient" component="div" className="error" />
-          </div>
-          <div>
-            <label htmlFor="sum">Token Amount:</label>
-            <Field type="number" name="sum" id="sum" />
-            <ErrorMessage name="sum" component="div" className="error" />
-          </div>
-          <button type="submit" disabled={!isValid || !dirty || isSubmitting}>
-            Perform Transfer
-          </button>
-          {successMessage && <div>{successMessage}</div>}
-          {errorMessage && <div>{errorMessage}</div>}
-          {isSubmitting && <div>Submitting...</div>}
-        </Form>
-      )}
-    </Formik>
+    <FormContainer>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema(balance, web3)}
+        onSubmit={handleSubmit}
+      >
+        {({ isValid, dirty, isSubmitting }) => (
+          <Form>
+            <h2>Token Transfer Form</h2>
+            <div>
+              <label htmlFor="recipient">Recipient Address:</label>
+              <Field type="text" name="recipient" id="recipient" />
+              <ErrorMessage
+                name="recipient"
+                component="div"
+                className="error"
+              />
+            </div>
+            <div>
+              <label htmlFor="sum">Token Amount:</label>
+              <Field type="number" name="sum" id="sum" />
+              <ErrorMessage name="sum" component="div" className="error" />
+            </div>
+            <button type="submit" disabled={!isValid || !dirty || isSubmitting}>
+              Perform Transfer
+            </button>
+            {successMessage && <div>{successMessage}</div>}
+            {errorMessage && <div>{errorMessage}</div>}
+            {isSubmitting && <div>Submitting...</div>}
+          </Form>
+        )}
+      </Formik>
+    </FormContainer>
   );
 };
 

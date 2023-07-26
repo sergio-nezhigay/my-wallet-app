@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Web3 from "web3";
-import { getAccountBalance } from "./getAccountBalance";
+import { getAccountBalance } from "../utils/getAccountBalance";
+import { ConnectionSpan } from "../styles/Connector.styled";
 
 export default function Connector({ setWeb3, setAccounts, setBalance }) {
   const [connectionInfo, setConnectionInfo] = useState("Connect wallet");
@@ -31,5 +32,7 @@ export default function Connector({ setWeb3, setAccounts, setBalance }) {
     }
   };
 
-  return <span onClick={connectWeb3}>{connectionInfo}</span>;
+  return (
+    <ConnectionSpan onClick={connectWeb3}>{connectionInfo}</ConnectionSpan>
+  );
 }
