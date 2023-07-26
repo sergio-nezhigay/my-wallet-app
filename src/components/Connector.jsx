@@ -4,14 +4,23 @@ import { useState } from "react";
 import Web3 from "web3";
 import { getAccountBalance } from "../utils/getAccountBalance";
 import { ConnectionSpan } from "../styles/Connector.styled";
+const STATUS = {
+  INIT: "init",
+  ERROR: "error",
+  INFO: "info",
+};
 
 export default function Connector({ setWeb3, setAccounts, setBalance }) {
-  const [connectionInfo, setConnectionInfo] = useState("Connect wallet");
+  const [connectionInfo, setConnectionInfo] = useState({
+    message: "Connect wallet",
+    status: STATUS.INIT,
+  });
 
   const connectWeb3 = async () => {
+    if (connectionInfo.status !== STATUS.INIT) return;
     if (typeof window.ethereum !== "undefined") {
       try {
-        setConnectionInfo("Connecting");
+        setConnectionInfo({ message: "Connecting", status: "info" });
         const web3Instance = new Web3(window.ethereum);
         setWeb3(web3Instance);
         const accounts = await window.ethereum.request({
@@ -29,18 +38,34 @@ export default function Connector({ setWeb3, setAccounts, setBalance }) {
             ? accounts[0].slice(0, 5) + "..." + accounts[0].slice(-4)
             : ""
         }`;
-        setConnectionInfo(formattedAccountInfo);
+        setConnectionInfo({
+          message: formattedAccountInfo,
+          status: STATUS.INFO,
+        });
       } catch (error) {
         console.error(error);
-        setConnectionInfo(`Connection error: ${error}`);
+        setConnectionInfo({
+          message: `Connection error: ${error}`,
+          status: STATUS.ERROR,
+        });
       }
     } else {
-      setConnectionInfo("Web3 not available");
+      setConnectionInfo({
+        message: "Web3 not available",
+        status: STATUS.ERROR,
+      });
     }
   };
 
   return (
-    <ConnectionSpan onClick={connectWeb3}>{connectionInfo}</ConnectionSpan>
+    <ConnectionSpan
+      onClick={connectWeb3}
+      status={connectionInfo.status}
+      role="button"
+      tabindex="0"
+    >
+      {connectionInfo.message}
+    </ConnectionSpan>
   );
 }
 

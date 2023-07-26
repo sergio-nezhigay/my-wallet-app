@@ -13,14 +13,17 @@ function App() {
   return (
     <AppContainer>
       <Header>
-        <img src={logoSvg} alt="Logo" width="100" />
-      </Header>
-      <Main>
+        <div>
+          <img src={logoSvg} alt="Logo" width="127" height="31" />
+        </div>
+
         <Connector
           setWeb3={setWeb3}
           setAccounts={setAccounts}
           setBalance={setBalance}
         />
+      </Header>
+      <Main>
         {balance && (
           <MoneyTransferForm
             web3={web3}
@@ -31,6 +34,7 @@ function App() {
           />
         )}
       </Main>
+      <h1>footer</h1>
     </AppContainer>
   );
 }

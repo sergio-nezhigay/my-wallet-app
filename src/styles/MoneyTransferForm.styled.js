@@ -6,11 +6,13 @@ export const FormContainer = styled.div`
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-  position: absolute;
+  /* position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
   padding: 16px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   border: 1px solid grey;
   border-radius: 6px;
   box-sizing: border-box;
