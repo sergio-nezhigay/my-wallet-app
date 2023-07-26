@@ -1,33 +1,59 @@
 import styled from "styled-components";
 
 export const FormContainer = styled.div`
-  form {
-    display: flex;
-    flex-direction: column;
-    max-width: 300px;
-    margin: 0 auto;
-  }
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 16px;
+  border: 1px solid grey;
+  border-radius: 6px;
+  box-sizing: border-box;
 
-  label {
-    font-weight: bold;
+  h2 {
+    margin-bottom: 16px;
+    text-align: center;
   }
+`;
 
-  input[type="text"],
-  input[type="number"] {
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid #ccc;
-  }
+export const Label = styled.label`
+  display: flex;
+  flex-basis: 100%;
+  font-weight: bold;
+  margin-bottom: 8px;
+`;
 
-  button[type="submit"] {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
+export const Input = styled.input`
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+`;
 
-  .error {
-    color: red;
+export const SubmitButton = styled.button`
+  display: block;
+  margin: 0 auto;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 20px;
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
   }
+`;
+
+export const ErrorText = styled.div`
+  color: red;
+  margin-bottom: 12px;
+  font-size: 14px;
 `;

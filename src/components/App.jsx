@@ -2,7 +2,8 @@ import { useState } from "react";
 import Connector from "./Connector";
 
 import MoneyTransferForm from "./MoneyTransferForm";
-import { AppContainer } from "../styles/App.styled";
+import { AppContainer, Header, Main } from "../styles/App.styled";
+import logoSvg from "../images/logo.svg";
 
 function App() {
   const [web3, setWeb3] = useState(null);
@@ -11,21 +12,25 @@ function App() {
 
   return (
     <AppContainer>
-      <h2>Logo</h2>
-      <Connector
-        setWeb3={setWeb3}
-        setAccounts={setAccounts}
-        setBalance={setBalance}
-      />
-      {balance && (
-        <MoneyTransferForm
-          web3={web3}
-          accounts={accounts}
+      <Header>
+        <img src={logoSvg} alt="Logo" width="100" />
+      </Header>
+      <Main>
+        <Connector
+          setWeb3={setWeb3}
+          setAccounts={setAccounts}
           setBalance={setBalance}
-          // balance={balance}
-          balance={500}
         />
-      )}
+        {balance && (
+          <MoneyTransferForm
+            web3={web3}
+            accounts={accounts}
+            setBalance={setBalance}
+            // balance={balance}
+            balance={500}
+          />
+        )}
+      </Main>
     </AppContainer>
   );
 }

@@ -1,37 +1,16 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { getAccountBalance } from "../utils/getAccountBalance";
-import { FormContainer } from "../styles/MoneyTransferForm.styled";
-
-const validationSchema = (balance, web3) =>
-  Yup.object().shape({
-    sum: Yup.number()
-      .required("Sum is required")
-      .test("balanceCheck", "Insufficient balance", function (value) {
-        return value <= balance;
-      })
-      .test("amountRangeCheck", "Invalid amount range", function (value) {
-        const minAmount = 0.000001;
-        const maxAmount = 100000;
-        const isMultipleOf10 = value % 10 === 0;
-        return value >= minAmount && value <= maxAmount && isMultipleOf10;
-      }),
-    recipient: Yup.string()
-      .required("Recipient is required")
-      .matches(/^0x[0-9A-Fa-f]{40}$/, "Invalid Ethereum wallet address")
-      .test(
-        "validAddress",
-        "Invalid Ethereum wallet address checksum",
-        function (value) {
-          // correct address for checking "0xc1912fEE45d61C87Cc5EA59DaE31190FFFFf232d"
-          return (
-            web3.utils.isAddress(value) &&
-            web3.utils.checkAddressChecksum(value)
-          );
-        }
-      ),
-  });
+import {
+  FormContainer,
+  Label,
+  Input,
+  SubmitButton,
+  ErrorText,
+} from "../styles/MoneyTransferForm.styled";
+import validationSchema from "../utils/validationSchemas";
 
 const MoneyTransferForm = ({ web3, accounts, setBalance, balance }) => {
   const [successMessage, setSuccessMessage] = useState("");
@@ -77,22 +56,21 @@ const MoneyTransferForm = ({ web3, accounts, setBalance, balance }) => {
           <Form>
             <h2>Token Transfer Form</h2>
             <div>
-              <label htmlFor="recipient">Recipient Address:</label>
-              <Field type="text" name="recipient" id="recipient" />
-              <ErrorMessage
-                name="recipient"
-                component="div"
-                className="error"
-              />
+              <Label htmlFor="recipient">Recipient Address:</Label>
+              <Field as={Input} type="text" name="recipient" id="recipient" />
+              <ErrorMessage name="recipient" component={ErrorText} />
             </div>
             <div>
-              <label htmlFor="sum">Token Amount:</label>
-              <Field type="number" name="sum" id="sum" />
-              <ErrorMessage name="sum" component="div" className="error" />
+              <Label htmlFor="sum">Token Amount:</Label>
+              <Field as={Input} type="number" name="sum" id="sum" />
+              <ErrorMessage name="sum" component={ErrorText} />
             </div>
-            <button type="submit" disabled={!isValid || !dirty || isSubmitting}>
+            <SubmitButton
+              type="submit"
+              disabled={!isValid || !dirty || isSubmitting}
+            >
               Perform Transfer
-            </button>
+            </SubmitButton>
             {successMessage && <div>{successMessage}</div>}
             {errorMessage && <div>{errorMessage}</div>}
             {isSubmitting && <div>Submitting...</div>}
@@ -104,3 +82,10 @@ const MoneyTransferForm = ({ web3, accounts, setBalance, balance }) => {
 };
 
 export default MoneyTransferForm;
+
+MoneyTransferForm.propTypes = {
+  web3: PropTypes.object.isRequired,
+  accounts: PropTypes.array.isRequired,
+  setBalance: PropTypes.func.isRequired,
+  balance: PropTypes.number.isRequired,
+};
