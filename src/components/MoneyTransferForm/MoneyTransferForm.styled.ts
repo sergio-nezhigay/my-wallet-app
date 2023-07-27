@@ -45,7 +45,7 @@ export const SubmitButton = styled.button`
   border: none;
   border-radius: 6px;
   cursor: pointer;
-
+  transition: background-color 0.3s;
   &:disabled {
     background-color: #ccc;
     cursor: not-allowed;
