@@ -39,6 +39,7 @@ const MoneyTransferForm: React.FC<IMoneyTransferFormProps> = ({
     values: { recipient: string; sum: string },
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
+    handleFieldFocus();
     const { recipient, sum } = values;
     try {
       await web3?.eth.sendTransaction({

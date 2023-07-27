@@ -59,7 +59,7 @@ export const ErrorText = styled.div`
 `;
 
 export const SuccessMessageStyled = styled.div`
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   text-align: center;
   margin-bottom: 12px;
