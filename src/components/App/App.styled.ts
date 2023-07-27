@@ -9,15 +9,14 @@ export const AppContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
   background-color: #f9f9f9;
+  padding: 20px 20px;
 `;
 export const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 20px 0;
 `;
 export const Footer = styled.footer`
   position: absolute;

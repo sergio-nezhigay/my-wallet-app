@@ -1,7 +1,14 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
+import Web3 from "web3";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { ThreeCircles } from "react-loader-spinner";
+
+interface IMoneyTransferFormProps {
+  web3: Web3;
+  accounts: string[];
+  setBalance: (balance: number | null) => void;
+  balance: number;
+}
 
 import { getAccountBalance } from "../../utils/getAccountBalance";
 import {
@@ -14,19 +21,27 @@ import {
 } from "./MoneyTransferForm.styled";
 import validationSchema from "../../utils/validationSchemas";
 
-const MoneyTransferForm = ({ web3, accounts, setBalance, balance }) => {
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+const MoneyTransferForm: React.FC<IMoneyTransferFormProps> = ({
+  web3,
+  accounts,
+  setBalance,
+  balance,
+}) => {
+  const [successMessage, setSuccessMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleFieldFocus = () => {
     setSuccessMessage("");
     setErrorMessage("");
   };
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (
+    values: { recipient: string; sum: string },
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
     const { recipient, sum } = values;
     try {
-      await web3.eth.sendTransaction({
+      await web3?.eth.sendTransaction({
         from: accounts[0],
         to: recipient,
         value: web3.utils.toWei(sum.toString(), "ether"),
@@ -86,9 +101,10 @@ const MoneyTransferForm = ({ web3, accounts, setBalance, balance }) => {
             >
               {isSubmitting ? (
                 <>
+                  <span>Transferring... </span>
                   <ThreeCircles
                     height="25"
-                    width="145"
+                    width="25"
                     color="#1E71FF"
                     visible={true}
                     ariaLabel="three-circles-rotating"
@@ -111,10 +127,3 @@ const MoneyTransferForm = ({ web3, accounts, setBalance, balance }) => {
 };
 
 export default MoneyTransferForm;
-
-MoneyTransferForm.propTypes = {
-  web3: PropTypes.object.isRequired,
-  accounts: PropTypes.array.isRequired,
-  setBalance: PropTypes.func.isRequired,
-  balance: PropTypes.number.isRequired,
-};

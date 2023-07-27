@@ -35,7 +35,7 @@ export const Input = styled.input`
 
 export const SubmitButton = styled.button`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   min-width: 160px;
   min-height: 40px;
@@ -59,7 +59,9 @@ export const ErrorText = styled.div`
 `;
 
 export const SuccessMessageStyled = styled.div`
-  color: green;
-  margin-bottom: 12px;
   font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 12px;
+  color: green;
 `;

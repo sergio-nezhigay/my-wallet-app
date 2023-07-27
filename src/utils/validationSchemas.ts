@@ -10,8 +10,7 @@ const validationSchema = (balance, web3) =>
       .test("amountRangeCheck", "Invalid amount range", function (value) {
         const minAmount = 0.000001;
         const maxAmount = 100000;
-        const isMultipleOf10 = value % 10 === 0;
-        return value >= minAmount && value <= maxAmount && isMultipleOf10;
+        return value >= minAmount && value <= maxAmount;
       }),
     recipient: Yup.string()
       .required("Recipient is required")
