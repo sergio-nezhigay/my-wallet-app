@@ -1,26 +1,20 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import Web3 from "web3";
-import { getAccountBalance } from "../utils/getAccountBalance";
-import { ConnectionSpan } from "../styles/Connector.styled";
-const STATUS = {
-  INIT: "init",
-  ERROR: "error",
-  INFO: "info",
-};
+import { getAccountBalance } from "../../utils/getAccountBalance";
+import { ConnectionSpan, Button } from "./Connector.styled";
+import { STATUS } from "../../utils/constants";
 
 export default function Connector({ setWeb3, setAccounts, setBalance }) {
   const [connectionInfo, setConnectionInfo] = useState({
-    message: "Connect wallet",
+    message: "",
     status: STATUS.INIT,
   });
 
   const connectWeb3 = async () => {
-    if (connectionInfo.status !== STATUS.INIT) return;
+    setConnectionInfo({ message: "Connecting", status: STATUS.INFO });
     if (typeof window.ethereum !== "undefined") {
       try {
-        setConnectionInfo({ message: "Connecting", status: "info" });
         const web3Instance = new Web3(window.ethereum);
         setWeb3(web3Instance);
         const accounts = await window.ethereum.request({
@@ -45,7 +39,7 @@ export default function Connector({ setWeb3, setAccounts, setBalance }) {
       } catch (error) {
         console.error(error);
         setConnectionInfo({
-          message: `Connection error: ${error}`,
+          message: `Connection error`,
           status: STATUS.ERROR,
         });
       }
@@ -58,14 +52,17 @@ export default function Connector({ setWeb3, setAccounts, setBalance }) {
   };
 
   return (
-    <ConnectionSpan
-      onClick={connectWeb3}
-      status={connectionInfo.status}
-      role="button"
-      tabindex="0"
-    >
-      {connectionInfo.message}
-    </ConnectionSpan>
+    <>
+      {connectionInfo.status === STATUS.INIT ? (
+        <Button onClick={connectWeb3} type="button">
+          Connect wallet
+        </Button>
+      ) : (
+        <ConnectionSpan status={connectionInfo.status}>
+          {connectionInfo.message}
+        </ConnectionSpan>
+      )}
+    </>
   );
 }
 

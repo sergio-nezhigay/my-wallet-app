@@ -6,14 +6,10 @@ export const FormContainer = styled.div`
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-  /* position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
   padding: 16px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-  border: 1px solid grey;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  border: 1px solid #f8f6f6;
   border-radius: 6px;
   box-sizing: border-box;
 
@@ -38,15 +34,17 @@ export const Input = styled.input`
 `;
 
 export const SubmitButton = styled.button`
-  display: block;
-  margin: 0 auto;
-  padding: 10px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 160px;
+  min-height: 40px;
+  margin: 20px auto;
   background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  margin-top: 20px;
 
   &:disabled {
     background-color: #ccc;
@@ -56,6 +54,12 @@ export const SubmitButton = styled.button`
 
 export const ErrorText = styled.div`
   color: red;
+  margin-bottom: 12px;
+  font-size: 14px;
+`;
+
+export const SuccessMessageStyled = styled.div`
+  color: green;
   margin-bottom: 12px;
   font-size: 14px;
 `;

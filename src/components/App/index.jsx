@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Connector from "./Connector";
+import Connector from "../Connector";
 
-import MoneyTransferForm from "./MoneyTransferForm";
-import { AppContainer, Header, Main } from "../styles/App.styled";
-import logoSvg from "../images/logo.svg";
+import MoneyTransferForm from "../MoneyTransferForm";
+import { AppContainer, Header, Main } from "./App.styled";
+import logoSvg from "../../images/logo.svg";
 
 function App() {
   const [web3, setWeb3] = useState(null);

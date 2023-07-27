@@ -9,10 +9,8 @@ export const AppContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-
   padding: 0 20px;
   background-color: #f9f9f9;
-  outline: 1px dotted red;
 `;
 export const Header = styled.header`
   display: flex;
